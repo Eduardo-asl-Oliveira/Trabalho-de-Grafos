@@ -1,10 +1,31 @@
-#importa a biblioteca
+# 1. primeiro o meu token é lido no arquivo .env para que possa ser realizada a requisicao
+# 2. escolho o repositorio e o usuario do repositorio
+# 3. a funcao coletar_dados_paginados faz requisicoes pagina por pagina do repositorio escolhido e armazena em dados da pagina
+# 4. filtro a os dados e armazeno as issues em uma lista e faco um for para cada item da lista
+    # a) para cada issue encontrada acho o autor e quem fechou a issue
+    # b) adiciono no grafo 2
+    # c) verifico se cada issue tem comentarios, se tiver faco mais uma requisicao
+    # d) encontro o dono do comentario 
+    # e) adiciono no grafo 1
+# 5. filtro a os dados e armazeno as pull request em uma lista e faco um for para cada item da lista
+    # a) acho o dono da pull request e o usuario que fez o merge
+    # b) adiciono no grafo 3
+    # c) se a pr tiver revisoes faco outra requisicao
+    # D) faco um for para cada revisao e acho quem fez a review
+    # e) adiciono no grafo 3 
+    # f) verifico se tem comentarios em pr e se tiver faco mais uma requisicao
+    # g) encontro quem fez o comentario 
+    # h) add no grafo 1 (quem comentou e quem recebeu)
+
+
+
+
+# --- importa a biblioteca ---
 import requests 
 import json
 import os                 
 from dotenv import load_dotenv 
-
-
+import time
 
 #--- Le o token ------
 load_dotenv() # Isso carrega as variáveis do arquivo .env para o ambient
@@ -15,10 +36,9 @@ MEU_TOKEN = os.environ.get("GITHUB_TOKEN")
 if not MEU_TOKEN:
     raise ValueError("Erro: Token do GitHub não encontrado. Verifique seu arquivo .env")
 
-
 #--- Repositorio escolhido----
-user = "tiangolo"
-repo_name = "fastapi"
+user = "dracula"
+repo_name = "dracula-theme"
 
 #---cabecalho de autentificacao nas requisicoes---
 headers = {
@@ -26,140 +46,217 @@ headers = {
     "Accept": "application/vnd.github.v3+json"
 }
 
-
-# --- Listas para guardar os dados ---
-issues_fechadas = []
-issues_coments = []
-pull_coments = []
-prs_aberto = []
-prs_mergeados = []
-todas_revisoes = []
+# --- Grafos ---
+grafo_1_comentarios = {}
+grafo_2_fechamento_issue = {}
+grafo_3_revisoes_e_merges = {}
+grafo_integrado_ponderado = {} 
 
 
-#---------------------------------------------------------------------
-# BUSCANDO FECHAMENTO DE ISSUES
-url_issues_fechadas = f"https://api.github.com/repos/{user}/{repo_name}/issues?state=closed&per_page=5"
-print(f"buscando issues fechadas para: {url_issues_fechadas}")
 
-try:
-    response_issues = requests.get(url_issues_fechadas, headers=headers)
+#-----------------------------------------------------------------------
+# --- RECEBE A REQUISICAO E ARMAZENA ---
+#-----------------------------------------------------------------------
+def coletar_dados_paginados(url_base):
+    """
+    Busca todos os dados de um endpoint da API do GitHub,
+    lidando automaticamente com a paginação.
+    """
+    print(f"Iniciando coleta em massa de: {url_base}")
+    dados_completos = []
+    pagina = 1
     
-    
-    if response_issues.status_code == 200:
-        issues_fechadas = response_issues.json()
-        print(f"  -> Sucesso! {len(issues_fechadas)} issues encontradas.")
-    else:
-        print(f"erro ao encontrar issues: {response_issues.status_code}")
-except requests.exceptions.RequestException as e:
-    print(f"Erro de conexão: {e}")
-
-
-#---------------------------------------------------------------------
-# BUSCANDO COMENTÁRIOS EM ISSUES
-url_issue_coments = f"https://api.github.com/repos/{user}/{repo_name}/issues/comments?per_page=5"
-print(f"\nbuscando comentarios em issues para: {url_issue_coments}")
-
-try:
-    response_issue_coments = requests.get(url_issue_coments, headers=headers)
-    
-    if response_issue_coments.status_code == 200:
-    
-        issues_coments = response_issue_coments.json()
-        print(f"  -> Sucesso! {len(issues_coments)} comentários encontrados.")
-    else:
-        print(f"erro ao encontrar comentarios: {response_issue_coments.status_code}")
-except requests.exceptions.RequestException as e:
-    print(f"Erro de conexão: {e}")
-
-
-#---------------------------------------------------------------------
-# BUSCANDO COMENTARIOS EM PULL REQUEST (No código)
-url_pull_comments = f"https://api.github.com/repos/{user}/{repo_name}/pulls/comments?per_page=5"
-print(f"\nbuscando comentarios em pull request para: {url_pull_comments}")
-
-try:
-    response_pull_coments = requests.get(url_pull_comments, headers=headers)
-    
-    if response_pull_coments.status_code == 200:
-        pull_coments = response_pull_coments.json()
-        print(f"  -> Sucesso! {len(pull_coments)} comentários de código encontrados.")
-    else:
-        print(f"erro ao encontrar comentarios em pull requests: {response_pull_coments.status_code}")
-except requests.exceptions.RequestException as e:
-    print(f"Erro de conexão: {e}")
-
-
-#---------------------------------------------------------------------
-# BUSCANDO ABERTURA DE PULL REQUEST
-url_prs_abertos = f"https://api.github.com/repos/{user}/{repo_name}/pulls?state=open&sort=created&direction=desc&per_page=5"
-print(f"\nbuscando PRs abertos para: {url_prs_abertos}")
-
-try:
-    response_prs_abertos = requests.get(url_prs_abertos, headers=headers)
-    
-    if response_prs_abertos.status_code == 200:
-        prs_aberto = response_prs_abertos.json()
-        print(f"  -> Sucesso! {len(prs_aberto)} PRs abertos encontrados.")
-    else:
-        print(f"erro ao encontrar abertura de pull requests: {response_prs_abertos.status_code}")
-except requests.exceptions.RequestException as e:
-    print(f"Erro de conexão: {e}")
-
-
-#---------------------------------------------------------------------
-# BUSCANDO MERGE DE PULL REQUEST
-url_prs_fechados = f"https://api.github.com/repos/{user}/{repo_name}/pulls?state=closed&sort=updated&direction=desc&per_page=10"
-print(f"\nbuscando os PRs fechados para achar os 'mergeados': {url_prs_fechados}")
-
-try:
-    response_prs_fechados = requests.get(url_prs_fechados, headers=headers)
-
-    if response_prs_fechados.status_code == 200:
-        prs_fechados = response_prs_fechados.json()
-
-        # Filtramos a lista para pegar só os que foram 'merged'
-        prs_mergeados = [pr for pr in prs_fechados if pr['merged_at'] is not None]
-        print(f"  -> Sucesso! {len(prs_mergeados)} PRs 'mergeados' encontrados.")
-    else:
-        print(f"erro ao encontrar PRs fechados: {response_prs_fechados.status_code}")
-except requests.exceptions.RequestException as e:
-    print(f"Erro de conexão: {e}")
-
-
-#---------------------------------------------------------------------
-# BUSCANDO REVISAO E APROVACAO DE PULL REQUEST
-# Vamos usar a lista 'prs_aberto' que pegamos acima como exemplo
-# Este é o "loop N+1" que discutimos.
-
-print(f"\nBuscando revisões para os {len(prs_aberto)} PRs abertos...")
-
-# Loop para cada PR que encontramos na lista 'prs_aberto'
-for pr in prs_aberto:
-    pr_number = pr['number']
-    print(f"  ...Buscando revisões para o PR #{pr_number}...")
-    
-    # Cria a URL específica para as REVISÕES daquele PR
-    url_revisoes = f"https://api.github.com/repos/{user}/{repo_name}/pulls/{pr_number}/reviews"
-    
-    try:
-        # Faz a chamada autenticada
-        response_revisoes = requests.get(url_revisoes, headers=headers)
+    while True:
+        # Pede a página 'X', com 100 itens por página (o máximo permitido)
+        # O state=all garante que pegamos issues abertas E fechadas
+        url = f"{url_base}?page={pagina}&per_page=100&state=all"
+        print(f"  ...buscando página {pagina}...")
         
-        if response_revisoes.status_code == 200:
-            revisoes_deste_pr = response_revisoes.json()
-            if revisoes_deste_pr:
-                print(f"    -> Encontradas {len(revisoes_deste_pr)} revisões.")
-                # Adiciona as revisões encontradas na nossa lista principal
-                todas_revisoes.extend(revisoes_deste_pr)
-            else:
-                print(f"    -> Nenhuma revisão encontrada para este PR.")
-        else:
-            print(f"    -> Erro ao buscar revisões para o PR #{pr_number}: {response_revisoes.status_code}")
+        try:
+            response = requests.get(url, headers=headers)
             
-    except requests.exceptions.RequestException as e:
-        print(f"Erro de conexão ao buscar revisões: {e}")
+            if response.status_code == 200:
+                dados_da_pagina = response.json()
+                
+                # Se a página veio vazia, significa que acabaram os dados
+                if not dados_da_pagina:
+                    print(f"  Coleta finalizada. Total de {len(dados_completos)} itens coletados.")
+                    break  # Sai do loop while
+                
+                # Adiciona os dados da página na nossa lista principal
+                dados_completos.extend(dados_da_pagina)
+                pagina += 1
+                
+            elif response.status_code == 403:
+                # Se atingiu o limite de requisições
+                print("  !!! ATINGIU O LIMITE DE REQUISIÇÕES (403). Aguardando 10 minutos... !!!")
+                time.sleep(600) # Aguarda 10 minutos
+                # O 'continue' faz o loop tentar a MESMA página novamente
+                continue 
+            else:
+                # Outros erros (404, 500, etc.)
+                print(f"  Erro {response.status_code} na página {pagina}. Parando coleta.")
+                print(response.json()) # Mostra o erro da API
+                break # Sai do loop while
 
-print("\n--- COLETA DE DADOS FINALIZADA ---")
-print(f"Total de PRs abertos coletados: {len(prs_aberto)}")
-print(f"Total de PRs mergeados coletados: {len(prs_mergeados)}")
-print(f"Total de revisões (Aprovações) coletadas: {len(todas_revisoes)}")
+        except requests.exceptions.RequestException as e:
+            print(f"Erro de conexão: {e}. Aguardando 1 minuto antes de tentar novamente...")
+            time.sleep(60) # Espera 1 minuto em caso de falha de rede
+            continue # Tenta a mesma página novamente
+            
+        # Pausa de 1 segundo entre as requisições para não sobrecarregar a API
+        time.sleep(1) 
+            
+    return dados_completos
+
+
+
+#-----------------------------------------------------------------------
+# --- COLETA E PROCESSA AS ISSUES ---
+#-----------------------------------------------------------------------
+print("\n--- INICIANDO COLETA DE ISSUES ---")
+url_base_issues = f"https://api.github.com/repos/{user}/{repo_name}/issues"
+
+todas_as_issues = coletar_dados_paginados(url_base_issues)# Chama a função que faz a paginação
+
+# --- Processando as issues ---
+print("\n--- INICIANDO PROCESSAMENTO DAS ISSUES ---")
+
+for issue in todas_as_issues:
+    
+    # 1. Ignora PRs (eles vêm misturados)
+    if "pull_request" in issue:
+        continue
+
+    # 2. Identifica o NÓ DE DESTINO (Dono)
+    # Este é o 'Usuario B' para todas as interações desta issue
+    usuario_B_dono = issue['user']['login']
+
+    # --- Lógica para o Grafo 2 (Fechamento) ---
+    # Verifica se a issue foi fechada por alguém
+    if issue['closed_by']:
+        # Identifica o NÓ DE ORIGEM (Quem fechou)
+        usuario_A_fechou = issue['closed_by']['login']
+        
+        # Garante que não foi fechada pelo próprio dono
+        if usuario_A_fechou != usuario_B_dono:
+            # Adiciona a aresta A -> B no Grafo 2
+            print(f"  [Grafo 2] Aresta: {usuario_A_fechou} -> {usuario_B_dono}")
+            grafo_2_fechamento_issue.setdefault(usuario_A_fechou, set()).add(usuario_B_dono)
+
+    # --- Lógica para o Grafo 1 (Comentários) ---
+    # Verifica se a issue tem comentários
+    if issue['comments'] > 0:
+        
+        # FAZ A "MINI-LEITURA" (Requisição N+1)
+        url_comentarios = issue['comments_url']
+        try:
+            print(f"  Buscando {issue['comments']} comentários para Issue #{issue['number']}...")
+            response_coments = requests.get(url_comentarios, headers=headers)
+            time.sleep(0.5) # Pausa para a API
+            
+            if response_coments.status_code == 200:
+                lista_de_comentarios = response_coments.json()
+                
+                # itera cada comentario
+                for comment in lista_de_comentarios:
+                    # Identifica o NÓ DE ORIGEM (Autor do comentário)
+                    usuario_A_comentou = comment['user']['login']
+                    
+                    if usuario_A_comentou != usuario_B_dono:
+                        # Adiciona a aresta A -> B no Grafo 1
+                        print(f"    [Grafo 1] Aresta: {usuario_A_comentou} -> {usuario_B_dono}")
+                        grafo_1_comentarios.setdefault(usuario_A_comentou, set()).add(usuario_B_dono)
+                        
+                        # (Aqui você também adicionaria os pesos no Grafo Integrado)
+
+        except Exception as e:
+            print(f"    Erro ao buscar comentários: {e}")
+
+print("--- Processamento de Issues finalizado. ---")
+
+
+
+#-----------------------------------------------------------------------
+# --- COLETA E PROCESSA AS PULL REQUESTS ---
+#-----------------------------------------------------------------------
+print("\n--- INICIANDO COLETA DE PULLS ---")
+url_base_pulls = f"https://api.github.com/repos/{user}/{repo_name}/pulls"
+
+# Chama a função que faz a paginação
+todas_as_pulls = coletar_dados_paginados(url_base_pulls)
+
+
+# --- Processando as Pulls (Para Grafos 1 e 3) ---
+print("\n--- INICIANDO PROCESSAMENTO DE PULL REQUESTS ---")
+
+for pr in todas_as_pulls:
+
+    # 1. Identifica o NÓ DE DESTINO (Dono)
+    if not pr.get('user'):
+        continue
+    usuario_B_dono = pr['user']['login']
+
+    # --- Lógica para o Grafo 3 (Merges) ---
+    merged_by_user = pr.get('merged_by') 
+    if merged_by_user:
+        usuario_A_merger = merged_by_user['login']
+        if usuario_A_merger != usuario_B_dono:
+            print(f"  [Grafo 3] Aresta (Merge): {usuario_A_merger} -> {usuario_B_dono}")
+            grafo_3_revisoes_e_merges.setdefault(usuario_A_merger, set()).add(usuario_B_dono)
+            
+            # (Aqui você adicionaria o peso 5 ao Grafo Integrado)
+            #
+
+    # --- Lógica para o Grafo 3 (Revisões / Aprovações) ---
+    #
+    # Primeiro, verificamos se a URL 'reviews_url' existe
+    url_revisoes = pr.get('reviews_url')
+    
+    if url_revisoes: # Só executa se a URL foi encontrada
+        try:
+            print(f"  Buscando revisões para PR #{pr['number']}...")
+            response_revisoes = requests.get(url_revisoes, headers=headers)
+            time.sleep(0.5) # Pausa
+            
+            if response_revisoes.status_code == 200:
+                lista_de_revisoes = response_revisoes.json()
+                
+                for review in lista_de_revisoes:
+                    if review.get('user'):
+                        usuario_A_revisor = review['user']['login']
+                        if usuario_A_revisor != usuario_B_dono:
+                            print(f"    [Grafo 3] Aresta (Revisão): {usuario_A_revisor} -> {usuario_B_dono}")
+                            grafo_3_revisoes_e_merges.setdefault(usuario_A_revisor, set()).add(usuario_B_dono)
+                            
+        except Exception as e:
+            print(f"    Erro ao buscar revisões: {e}")
+    #
+    # --- Lógica para o Grafo 1 (Comentários em PRs) ---
+    #
+    
+    # Isso pega o número, ou retorna 0 se a chave 'comments' não existir.
+    if pr.get('comments', 0) > 0:
+        
+        # Verificamos também a URL de comentários
+        url_comentarios = pr.get('comments_url')
+        
+        if url_comentarios: # Só executa se a URL foi encontrada
+            try:
+                print(f"  Buscando {pr['comments']} comentários de conversa para PR #{pr['number']}...")
+                response_coments = requests.get(url_comentarios, headers=headers)
+                time.sleep(0.5) # Pausa
+                
+                if response_coments.status_code == 200:
+                    lista_de_comentarios = response_coments.json()
+                    for comment in lista_de_comentarios:
+                        if comment.get('user'):
+                            usuario_A_comentou = comment['user']['login']
+                            if usuario_A_comentou != usuario_B_dono:
+                                print(f"    [Grafo 1] Aresta (Comentário): {usuario_A_comentou} -> {usuario_B_dono}")
+                                grafo_1_comentarios.setdefault(usuario_A_comentou, set()).add(usuario_B_dono)
+                                
+            except Exception as e:
+                print(f"    Erro ao buscar comentários de conversa: {e}")
+
+print("--- Processamento de Pull Requests finalizado. ---")
