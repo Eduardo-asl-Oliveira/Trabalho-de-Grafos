@@ -1,0 +1,15 @@
+
+# Arquivo que contém dados pessoais
+.env
+
+# Ambientes virtuais (NUNCA suba isso)
+/ambiente_de_requisicao/
+/nome_do_ambiente_virtual/
+/venv/
+
+# Arquivos de cache do Python
+__pycache__/
+
+# Os arquivos .json com os resultados da coleta
+# (É bom ignorar, pois podem ser dados sensíveis)
+*.json
