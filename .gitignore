@@ -1,15 +1,13 @@
+# Ignorar ambiente virtual
+ambiente_de_requisicao/
+venv/
 
-# Arquivo que contém dados pessoais
+# Ignorar arquivos compilados do Python
+__pycache__/
+*.pyc
+
+# Ignorar arquivos de ambiente (senhas)
 .env
 
-# Ambientes virtuais (NUNCA suba isso)
-/ambiente_de_requisicao/
-/nome_do_ambiente_virtual/
-/venv/
 
-# Arquivos de cache do Python
-__pycache__/
-
-# Os arquivos .json com os resultados da coleta
-# (É bom ignorar, pois podem ser dados sensíveis)
-*.json
+# data/*.gexf

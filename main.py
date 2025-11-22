@@ -110,6 +110,29 @@ def coletar_dados_paginados(url_base):
     return dados_completos
 
 
+def adicionar_peso(origem, destino, peso):
+    """
+    Adiciona um peso a uma aresta no grafo_integrado_ponderado.
+    Se a aresta (origem -> destino) já existir, o peso é somado.
+    """
+    
+    # Garante que o usuário de 'origem' exista no grafo
+    if origem not in grafo_integrado_ponderado:
+        grafo_integrado_ponderado[origem] = {}
+        
+    # Pega o peso atual (ou 0 se a aresta não existir)
+    peso_atual = grafo_integrado_ponderado[origem].get(destino, 0)
+    
+    # Soma o novo peso e atualiza o grafo
+    grafo_integrado_ponderado[origem][destino] = peso_atual + peso
+    
+    # Imprime a ação para vermos o que está acontecendo
+    print(f"    [GRAFO PONDERADO] Aresta: {origem} -> {destino} | Peso adicionado: +{peso} | Peso total: {grafo_integrado_ponderado[origem][destino]}")
+
+
+
+
+
 
 #-----------------------------------------------------------------------
 # --- COLETA E PROCESSA AS ISSUES ---
@@ -161,6 +184,9 @@ for issue in todas_as_issues:
                 # itera cada comentario
                 for comment in lista_de_comentarios:
                     # Identifica o NÓ DE ORIGEM (Autor do comentário)
+                    if not comment.get('user'): # Segurança: verifica se o usuário não é nulo
+                        continue
+                        
                     usuario_A_comentou = comment['user']['login']
                     
                     if usuario_A_comentou != usuario_B_dono:
@@ -168,7 +194,15 @@ for issue in todas_as_issues:
                         print(f"    [Grafo 1] Aresta: {usuario_A_comentou} -> {usuario_B_dono}")
                         grafo_1_comentarios.setdefault(usuario_A_comentou, set()).add(usuario_B_dono)
                         
-                        # (Aqui você também adicionaria os pesos no Grafo Integrado)
+                        # --- ADICIONANDO PESOS ---
+                        
+                        # Comentário em issue: peso 2 
+                        # Aresta: Quem comentou (A) -> Dono da Issue (B)
+                        adicionar_peso(usuario_A_comentou, usuario_B_dono, 2)
+                        
+                        # Abertura de issue comentada: peso 3 
+                        # Aresta: Dono da Issue (B) -> Quem comentou (A)
+                        adicionar_peso(usuario_B_dono, usuario_A_comentou, 3)
 
         except Exception as e:
             print(f"    Erro ao buscar comentários: {e}")
@@ -205,8 +239,11 @@ for pr in todas_as_pulls:
             print(f"  [Grafo 3] Aresta (Merge): {usuario_A_merger} -> {usuario_B_dono}")
             grafo_3_revisoes_e_merges.setdefault(usuario_A_merger, set()).add(usuario_B_dono)
             
-            # (Aqui você adicionaria o peso 5 ao Grafo Integrado)
-            #
+            # --- ADICIONANDO PESOS ---
+            
+            # Merge de pull request: peso 5 
+            # Aresta: Quem fez o merge (A) -> Dono do PR (B)
+            adicionar_peso(usuario_A_merger, usuario_B_dono, 5)
 
     # --- Lógica para o Grafo 3 (Revisões / Aprovações) ---
     #
@@ -228,6 +265,12 @@ for pr in todas_as_pulls:
                         if usuario_A_revisor != usuario_B_dono:
                             print(f"    [Grafo 3] Aresta (Revisão): {usuario_A_revisor} -> {usuario_B_dono}")
                             grafo_3_revisoes_e_merges.setdefault(usuario_A_revisor, set()).add(usuario_B_dono)
+
+                            # --- ADICIONANDO PESOS ---
+                            
+                            # Revisão/aprovação de pull request: peso 4 
+                            # Aresta: Quem revisou (A) -> Dono do PR (B)
+                            adicionar_peso(usuario_A_revisor, usuario_B_dono, 4)
                             
         except Exception as e:
             print(f"    Erro ao buscar revisões: {e}")
@@ -255,8 +298,50 @@ for pr in todas_as_pulls:
                             if usuario_A_comentou != usuario_B_dono:
                                 print(f"    [Grafo 1] Aresta (Comentário): {usuario_A_comentou} -> {usuario_B_dono}")
                                 grafo_1_comentarios.setdefault(usuario_A_comentou, set()).add(usuario_B_dono)
+
+                                # --- ADICIONANDO PESOS ---
+                                
+                                # Comentário em pull request: peso 2 
+                                # Aresta: Quem comentou (A) -> Dono do PR (B)
+                                adicionar_peso(usuario_A_comentou, usuario_B_dono, 2)
                                 
             except Exception as e:
                 print(f"    Erro ao buscar comentários de conversa: {e}")
 
 print("--- Processamento de Pull Requests finalizado. ---")
+
+
+
+from src.AdjacencyListGraph import AdjacencyListGraph
+
+# 1. Identificar todos os usuários únicos para definir tamanho do grafo
+usuarios_unicos = set(grafo_integrado_ponderado.keys())
+for origem, destinos in grafo_integrado_ponderado.items():
+    usuarios_unicos.update(destinos.keys())
+
+num_vertices = len(usuarios_unicos)
+print(f"Criando grafo com {num_vertices} vértices...")
+
+# 2. Instanciar o Grafo (pode escolher Matriz ou Lista)
+meu_grafo = AdjacencyListGraph(num_vertices)
+
+# 3. Povoar o Grafo (Mapeando String -> Int)
+# Primeiro, registramos todos os usuários para gerar os IDs
+for usuario in usuarios_unicos:
+    meu_grafo.add_vertex_label(usuario)
+
+# Agora, criamos as arestas com os pesos
+for user_origem, conexoes in grafo_integrado_ponderado.items():
+    u_id = meu_grafo.label_to_id[user_origem]
+    
+    for user_destino, peso in conexoes.items():
+        v_id = meu_grafo.label_to_id[user_destino]
+        
+        meu_grafo.add_edge(u_id, v_id)
+        meu_grafo.set_edge_weight(u_id, v_id, float(peso))
+
+print(f"Grafo populado! Arestas totais: {meu_grafo.get_edge_count()}")
+
+print("Exportando para Gephi...")
+meu_grafo.export_to_gephi("data/rede_dracula.gexf") 
+print("Arquivo 'rede_dracula.gexf' gerado com sucesso!")
