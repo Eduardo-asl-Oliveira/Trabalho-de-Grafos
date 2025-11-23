@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/295276294",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/225#issuecomment-295276294",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/225",
+        "id": 295276294,
+        "node_id": "MDEyOklzc3VlQ29tbWVudDI5NTI3NjI5NA==",
+        "user": {
+            "login": "john-eevee",
+            "id": 5256711,
+            "node_id": "MDQ6VXNlcjUyNTY3MTE=",
+            "avatar_url": "https://avatars.githubusercontent.com/u/5256711?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/john-eevee",
+            "html_url": "https://github.com/john-eevee",
+            "followers_url": "https://api.github.com/users/john-eevee/followers",
+            "following_url": "https://api.github.com/users/john-eevee/following{/other_user}",
+            "gists_url": "https://api.github.com/users/john-eevee/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/john-eevee/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/john-eevee/subscriptions",
+            "organizations_url": "https://api.github.com/users/john-eevee/orgs",
+            "repos_url": "https://api.github.com/users/john-eevee/repos",
+            "events_url": "https://api.github.com/users/john-eevee/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/john-eevee/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2017-04-19T13:47:59Z",
+        "updated_at": "2017-04-20T03:26:31Z",
+        "body": "Download and copy [Dracula.icls](https://github.com/dracula/jetbrains/blob/master/Dracula.icls) to your distribution folder under `C:\\Users\\<username>\\.IntelliJY.X\\config\\colors`\r\n\r\nWhere username is your account name and .IntelliJY.x is your IntelliJ or other Jetbrains IDE dot folder",
+        "author_association": "NONE",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/295276294/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

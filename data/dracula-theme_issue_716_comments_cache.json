@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/1197121668",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/716#issuecomment-1197121668",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/716",
+        "id": 1197121668,
+        "node_id": "IC_kwDOANQccc5HWqCE",
+        "user": {
+            "login": "luxonauta",
+            "id": 48334856,
+            "node_id": "MDQ6VXNlcjQ4MzM0ODU2",
+            "avatar_url": "https://avatars.githubusercontent.com/u/48334856?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/luxonauta",
+            "html_url": "https://github.com/luxonauta",
+            "followers_url": "https://api.github.com/users/luxonauta/followers",
+            "following_url": "https://api.github.com/users/luxonauta/following{/other_user}",
+            "gists_url": "https://api.github.com/users/luxonauta/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/luxonauta/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/luxonauta/subscriptions",
+            "organizations_url": "https://api.github.com/users/luxonauta/orgs",
+            "repos_url": "https://api.github.com/users/luxonauta/repos",
+            "events_url": "https://api.github.com/users/luxonauta/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/luxonauta/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2022-07-27T18:10:29Z",
+        "updated_at": "2022-07-27T18:10:29Z",
+        "body": "Hi @alexeygrant 👋🏻, the best place to get help is on our [Discord](https://draculatheme.com/discord-invite)!\r\n\r\nThere has a channel dedicated to **Dracula Pro**, we are always attentive there, and other users are always willing to help! 😊\r\n\r\nThis low-contrast issue is interesting; I'll be investigating! 🔥",
+        "author_association": "MEMBER",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/1197121668/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

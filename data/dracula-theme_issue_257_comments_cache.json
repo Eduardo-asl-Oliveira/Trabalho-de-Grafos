@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/359740490",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/257#issuecomment-359740490",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/257",
+        "id": 359740490,
+        "node_id": "MDEyOklzc3VlQ29tbWVudDM1OTc0MDQ5MA==",
+        "user": {
+            "login": "gusano",
+            "id": 271068,
+            "node_id": "MDQ6VXNlcjI3MTA2OA==",
+            "avatar_url": "https://avatars.githubusercontent.com/u/271068?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/gusano",
+            "html_url": "https://github.com/gusano",
+            "followers_url": "https://api.github.com/users/gusano/followers",
+            "following_url": "https://api.github.com/users/gusano/following{/other_user}",
+            "gists_url": "https://api.github.com/users/gusano/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/gusano/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/gusano/subscriptions",
+            "organizations_url": "https://api.github.com/users/gusano/orgs",
+            "repos_url": "https://api.github.com/users/gusano/repos",
+            "events_url": "https://api.github.com/users/gusano/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/gusano/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2018-01-23T10:03:03Z",
+        "updated_at": "2018-01-23T10:03:03Z",
+        "body": "We ended up adding the MIT license in the code. Closing this.",
+        "author_association": "NONE",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/359740490/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

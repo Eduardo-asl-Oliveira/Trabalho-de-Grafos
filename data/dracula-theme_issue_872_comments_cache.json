@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/1596132984",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/872#issuecomment-1596132984",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/872",
+        "id": 1596132984,
+        "node_id": "IC_kwDOANQccc5fIw54",
+        "user": {
+            "login": "MayhemBill",
+            "id": 5598969,
+            "node_id": "MDQ6VXNlcjU1OTg5Njk=",
+            "avatar_url": "https://avatars.githubusercontent.com/u/5598969?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/MayhemBill",
+            "html_url": "https://github.com/MayhemBill",
+            "followers_url": "https://api.github.com/users/MayhemBill/followers",
+            "following_url": "https://api.github.com/users/MayhemBill/following{/other_user}",
+            "gists_url": "https://api.github.com/users/MayhemBill/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/MayhemBill/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/MayhemBill/subscriptions",
+            "organizations_url": "https://api.github.com/users/MayhemBill/orgs",
+            "repos_url": "https://api.github.com/users/MayhemBill/repos",
+            "events_url": "https://api.github.com/users/MayhemBill/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/MayhemBill/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2023-06-18T12:49:51Z",
+        "updated_at": "2023-06-18T12:49:51Z",
+        "body": "I will add a list of compatible sites/apps on the YTMD repo I have, since it just works™",
+        "author_association": "NONE",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/1596132984/reactions",
+            "total_count": 1,
+            "+1": 1,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

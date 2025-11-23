@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/1066249476",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/695#issuecomment-1066249476",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/695",
+        "id": 1066249476,
+        "node_id": "IC_kwDOANQccc4_ja0E",
+        "user": {
+            "login": "zenorocha",
+            "id": 398893,
+            "node_id": "MDQ6VXNlcjM5ODg5Mw==",
+            "avatar_url": "https://avatars.githubusercontent.com/u/398893?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/zenorocha",
+            "html_url": "https://github.com/zenorocha",
+            "followers_url": "https://api.github.com/users/zenorocha/followers",
+            "following_url": "https://api.github.com/users/zenorocha/following{/other_user}",
+            "gists_url": "https://api.github.com/users/zenorocha/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/zenorocha/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/zenorocha/subscriptions",
+            "organizations_url": "https://api.github.com/users/zenorocha/orgs",
+            "repos_url": "https://api.github.com/users/zenorocha/repos",
+            "events_url": "https://api.github.com/users/zenorocha/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/zenorocha/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2022-03-14T01:35:20Z",
+        "updated_at": "2022-03-14T01:35:20Z",
+        "body": "Hey @welcoMattic,\r\n\r\nI just sent you an invitation to join the organization.\r\n\r\nI also cloned your repository for Dracula's organization, so you can go ahead and delete or archive yours:\r\n\r\n- [Your repository.](https://github.com/welcoMattic/zellij)\r\n- [New repository.](https://github.com/dracula/zellij)\r\n\r\nYou can check the live page here:\r\nhttps://draculatheme.com/zellij\r\n\r\nThanks for building this! 🎉",
+        "author_association": "CONTRIBUTOR",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/1066249476/reactions",
+            "total_count": 1,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 1,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/1523931396",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/836#issuecomment-1523931396",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/836",
+        "id": 1523931396,
+        "node_id": "IC_kwDOANQccc5a1VkE",
+        "user": {
+            "login": "luxonauta",
+            "id": 48334856,
+            "node_id": "MDQ6VXNlcjQ4MzM0ODU2",
+            "avatar_url": "https://avatars.githubusercontent.com/u/48334856?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/luxonauta",
+            "html_url": "https://github.com/luxonauta",
+            "followers_url": "https://api.github.com/users/luxonauta/followers",
+            "following_url": "https://api.github.com/users/luxonauta/following{/other_user}",
+            "gists_url": "https://api.github.com/users/luxonauta/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/luxonauta/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/luxonauta/subscriptions",
+            "organizations_url": "https://api.github.com/users/luxonauta/orgs",
+            "repos_url": "https://api.github.com/users/luxonauta/repos",
+            "events_url": "https://api.github.com/users/luxonauta/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/luxonauta/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2023-04-26T19:25:09Z",
+        "updated_at": "2023-04-26T19:25:09Z",
+        "body": "Wow, I had no idea; I would like to help, but I am not a user of this platform! 😓\r\n\r\nBut there is a better place to share the same, which is the project repository, where you can talk to the theme maintainers.\r\n\r\n✅ [Clicking here](https://github.com/dracula/gtk/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D+Write+a+suitable+title), you can open an Issue on it.",
+        "author_association": "MEMBER",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/1523931396/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

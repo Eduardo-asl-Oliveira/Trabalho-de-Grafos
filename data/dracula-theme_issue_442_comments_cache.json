@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/672820744",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/442#issuecomment-672820744",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/442",
+        "id": 672820744,
+        "node_id": "MDEyOklzc3VlQ29tbWVudDY3MjgyMDc0NA==",
+        "user": {
+            "login": "hacknug",
+            "id": 1107521,
+            "node_id": "MDQ6VXNlcjExMDc1MjE=",
+            "avatar_url": "https://avatars.githubusercontent.com/u/1107521?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/hacknug",
+            "html_url": "https://github.com/hacknug",
+            "followers_url": "https://api.github.com/users/hacknug/followers",
+            "following_url": "https://api.github.com/users/hacknug/following{/other_user}",
+            "gists_url": "https://api.github.com/users/hacknug/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/hacknug/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/hacknug/subscriptions",
+            "organizations_url": "https://api.github.com/users/hacknug/orgs",
+            "repos_url": "https://api.github.com/users/hacknug/repos",
+            "events_url": "https://api.github.com/users/hacknug/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/hacknug/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2020-08-12T11:41:26Z",
+        "updated_at": "2020-08-12T11:41:26Z",
+        "body": "That's node.js' logo :wink:",
+        "author_association": "MEMBER",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/672820744/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

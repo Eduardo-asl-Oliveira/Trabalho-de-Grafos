@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/27421973",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/1#issuecomment-27421973",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/1",
+        "id": 27421973,
+        "node_id": "MDEyOklzc3VlQ29tbWVudDI3NDIxOTcz",
+        "user": {
+            "login": "vagnervjs",
+            "id": 1696024,
+            "node_id": "MDQ6VXNlcjE2OTYwMjQ=",
+            "avatar_url": "https://avatars.githubusercontent.com/u/1696024?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/vagnervjs",
+            "html_url": "https://github.com/vagnervjs",
+            "followers_url": "https://api.github.com/users/vagnervjs/followers",
+            "following_url": "https://api.github.com/users/vagnervjs/following{/other_user}",
+            "gists_url": "https://api.github.com/users/vagnervjs/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/vagnervjs/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/vagnervjs/subscriptions",
+            "organizations_url": "https://api.github.com/users/vagnervjs/orgs",
+            "repos_url": "https://api.github.com/users/vagnervjs/repos",
+            "events_url": "https://api.github.com/users/vagnervjs/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/vagnervjs/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2013-10-30T18:14:50Z",
+        "updated_at": "2013-10-30T18:14:50Z",
+        "body": "#15 \n",
+        "author_association": "CONTRIBUTOR",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/27421973/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

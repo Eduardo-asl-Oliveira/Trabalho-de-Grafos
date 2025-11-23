@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/889958370",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/595#issuecomment-889958370",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/595",
+        "id": 889958370,
+        "node_id": "IC_kwDOANQccc41C6_i",
+        "user": {
+            "login": "bigpick",
+            "id": 9803299,
+            "node_id": "MDQ6VXNlcjk4MDMyOTk=",
+            "avatar_url": "https://avatars.githubusercontent.com/u/9803299?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/bigpick",
+            "html_url": "https://github.com/bigpick",
+            "followers_url": "https://api.github.com/users/bigpick/followers",
+            "following_url": "https://api.github.com/users/bigpick/following{/other_user}",
+            "gists_url": "https://api.github.com/users/bigpick/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/bigpick/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/bigpick/subscriptions",
+            "organizations_url": "https://api.github.com/users/bigpick/orgs",
+            "repos_url": "https://api.github.com/users/bigpick/repos",
+            "events_url": "https://api.github.com/users/bigpick/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/bigpick/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2021-07-30T15:11:15Z",
+        "updated_at": "2021-07-30T15:11:15Z",
+        "body": "Heya! If you're looking to get your theme added as a additional Dracula org sub-theme, you'll want to [create a new repo based off the Dracula theme template](https://github.com/dracula/template) and then use that as your link here to have something to request for transfer into the org.\r\n\r\nThe standardized theme repo helps keeps things consistent across the (many) ports of Dracula themes. It also helps to have (at least one) screenshot of the theme, so people have an idea of what it looks like without having to configure it all just to look; same goes for the install section too.\r\n\r\nThink you could fork the template repo and update accordingly with your theme's appropriate info and then update this issue, so this issue has a better chance of making it in to the official org? Thanks!",
+        "author_association": "NONE",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/889958370/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

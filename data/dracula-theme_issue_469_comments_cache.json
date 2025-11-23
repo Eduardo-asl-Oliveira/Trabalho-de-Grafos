@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/729141957",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/469#issuecomment-729141957",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/469",
+        "id": 729141957,
+        "node_id": "MDEyOklzc3VlQ29tbWVudDcyOTE0MTk1Nw==",
+        "user": {
+            "login": "delucca",
+            "id": 3899037,
+            "node_id": "MDQ6VXNlcjM4OTkwMzc=",
+            "avatar_url": "https://avatars.githubusercontent.com/u/3899037?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/delucca",
+            "html_url": "https://github.com/delucca",
+            "followers_url": "https://api.github.com/users/delucca/followers",
+            "following_url": "https://api.github.com/users/delucca/following{/other_user}",
+            "gists_url": "https://api.github.com/users/delucca/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/delucca/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/delucca/subscriptions",
+            "organizations_url": "https://api.github.com/users/delucca/orgs",
+            "repos_url": "https://api.github.com/users/delucca/repos",
+            "events_url": "https://api.github.com/users/delucca/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/delucca/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2020-11-17T19:12:52Z",
+        "updated_at": "2020-11-17T19:12:52Z",
+        "body": "Never mind. It was a issue with Gnome Keyring. I don't know why in my tests it started working again after removing the theme.\r\n\r\nClosing.",
+        "author_association": "NONE",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/729141957/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

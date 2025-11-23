@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/1309177926",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/769#issuecomment-1309177926",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/769",
+        "id": 1309177926,
+        "node_id": "IC_kwDOANQccc5OCHhG",
+        "user": {
+            "login": "luxonauta",
+            "id": 48334856,
+            "node_id": "MDQ6VXNlcjQ4MzM0ODU2",
+            "avatar_url": "https://avatars.githubusercontent.com/u/48334856?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/luxonauta",
+            "html_url": "https://github.com/luxonauta",
+            "followers_url": "https://api.github.com/users/luxonauta/followers",
+            "following_url": "https://api.github.com/users/luxonauta/following{/other_user}",
+            "gists_url": "https://api.github.com/users/luxonauta/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/luxonauta/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/luxonauta/subscriptions",
+            "organizations_url": "https://api.github.com/users/luxonauta/orgs",
+            "repos_url": "https://api.github.com/users/luxonauta/repos",
+            "events_url": "https://api.github.com/users/luxonauta/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/luxonauta/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2022-11-09T18:15:59Z",
+        "updated_at": "2022-11-09T18:15:59Z",
+        "body": "Hi 🙋🏻‍♂️ Augusto, which app would you like this to change?\r\n\r\nThe ideal would be to create this Issue in its repository; ✅ here in this repository, we try to keep only questions about theme submissions, updates or suggestions for the organization.\r\n\r\nIt looks like this capture is done in VSCode; if that's the case, the best place for this Issue is [here](https://github.com/dracula/visual-studio-code).",
+        "author_association": "MEMBER",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/1309177926/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

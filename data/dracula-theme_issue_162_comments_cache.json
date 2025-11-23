@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/220178840",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/162#issuecomment-220178840",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/162",
+        "id": 220178840,
+        "node_id": "MDEyOklzc3VlQ29tbWVudDIyMDE3ODg0MA==",
+        "user": {
+            "login": "nesl247",
+            "id": 1037526,
+            "node_id": "MDQ6VXNlcjEwMzc1MjY=",
+            "avatar_url": "https://avatars.githubusercontent.com/u/1037526?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/nesl247",
+            "html_url": "https://github.com/nesl247",
+            "followers_url": "https://api.github.com/users/nesl247/followers",
+            "following_url": "https://api.github.com/users/nesl247/following{/other_user}",
+            "gists_url": "https://api.github.com/users/nesl247/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/nesl247/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/nesl247/subscriptions",
+            "organizations_url": "https://api.github.com/users/nesl247/orgs",
+            "repos_url": "https://api.github.com/users/nesl247/repos",
+            "events_url": "https://api.github.com/users/nesl247/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/nesl247/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2016-05-18T22:36:50Z",
+        "updated_at": "2016-05-18T22:36:50Z",
+        "body": "Discussed on Slack. We're only going to keep one official one for a shell. Thus closing this as mine is a multi-line.\n",
+        "author_association": "NONE",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/220178840/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]

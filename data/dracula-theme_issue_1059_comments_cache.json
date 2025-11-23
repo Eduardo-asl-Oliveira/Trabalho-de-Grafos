@@ -1,0 +1,47 @@
+[
+    {
+        "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/3567103919",
+        "html_url": "https://github.com/dracula/dracula-theme/issues/1059#issuecomment-3567103919",
+        "issue_url": "https://api.github.com/repos/dracula/dracula-theme/issues/1059",
+        "id": 3567103919,
+        "node_id": "IC_kwDOANQccc7Una-v",
+        "user": {
+            "login": "Mantej-Singh",
+            "id": 19365795,
+            "node_id": "MDQ6VXNlcjE5MzY1Nzk1",
+            "avatar_url": "https://avatars.githubusercontent.com/u/19365795?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/Mantej-Singh",
+            "html_url": "https://github.com/Mantej-Singh",
+            "followers_url": "https://api.github.com/users/Mantej-Singh/followers",
+            "following_url": "https://api.github.com/users/Mantej-Singh/following{/other_user}",
+            "gists_url": "https://api.github.com/users/Mantej-Singh/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/Mantej-Singh/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/Mantej-Singh/subscriptions",
+            "organizations_url": "https://api.github.com/users/Mantej-Singh/orgs",
+            "repos_url": "https://api.github.com/users/Mantej-Singh/repos",
+            "events_url": "https://api.github.com/users/Mantej-Singh/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/Mantej-Singh/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+        },
+        "created_at": "2025-11-22T22:39:53Z",
+        "updated_at": "2025-11-22T22:39:53Z",
+        "body": "Hello, \nIs there anything i need to do to? ",
+        "author_association": "NONE",
+        "reactions": {
+            "url": "https://api.github.com/repos/dracula/dracula-theme/issues/comments/3567103919/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+        },
+        "performed_via_github_app": null
+    }
+]
