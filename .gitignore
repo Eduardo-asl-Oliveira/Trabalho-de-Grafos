@@ -9,5 +9,5 @@ __pycache__/
 # Ignorar arquivos de ambiente (senhas)
 .env
 
-
-# data/*.gexf
+#Ignorar arquivos de dados/cache
+data/
