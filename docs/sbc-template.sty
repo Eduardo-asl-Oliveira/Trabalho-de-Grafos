@@ -1,0 +1,79 @@
+% sbc-template.sty - Style file for SBC Conference Templates
+% Created by the Brazilian Computer Society (SBC)
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{sbc-template}[2025/02/23 SBC Conference Template]
+
+% --- TAMANHO DO PAPEL E MARGENS (Configuração Nativa) ---
+\setlength{\paperwidth}{210mm}
+\setlength{\paperheight}{297mm}
+
+\setlength{\textwidth}{150mm} 
+\setlength{\textheight}{237mm} 
+
+\setlength{\oddsidemargin}{0.46cm} 
+\setlength{\evensidemargin}{0.46cm}
+\setlength{\topmargin}{0.46cm}     
+\setlength{\headheight}{0cm}
+\setlength{\headsep}{0cm}
+\setlength{\footskip}{1cm}
+
+% --- FONTES ---
+\RequirePackage{times}
+
+% --- LEGENDAS ---
+\RequirePackage[font=small,labelfont=bf,labelsep=endash]{caption}
+
+% --- SEÇÕES ---
+\RequirePackage{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection.}{0.5em}{}
+
+% --- DADOS DO AUTOR ---
+\newcommand{\inst}[1]{\ensuremath{^{#1}}}
+
+\def\address#1{\gdef\@address{#1}}
+\def\@address{}
+
+\def\email#1{\gdef\@email{#1}}
+\def\@email{}
+
+% --- MAKETITLE ---
+\providecommand{\maketitle}{}
+\renewcommand{\maketitle}{
+  \begin{center}
+    {\Large\bfseries \@title \par}
+    \vspace{1cm}
+    {\large \@author \par}
+    \vspace{0.5cm}
+    {\small \textit{\@address} \par}
+    \vspace{0.2cm}
+    {\small \texttt{\@email} \par}
+    \vspace{1cm}
+  \end{center}
+}
+
+% --- RESUMOS ---
+\ifx\abstract\undefined
+  \newenvironment{abstract}{
+    \begin{center}\textbf{Abstract}\end{center}
+    \small \quotation \noindent
+  }{\endquotation}
+\else
+  \renewenvironment{abstract}{
+    \begin{center}\textbf{Abstract}\end{center}
+    \small \quotation \noindent
+  }{\endquotation}
+\fi
+
+\newenvironment{resumo}{
+  \begin{center}
+    \textbf{Resumo}
+  \end{center}
+  \small \quotation \noindent
+}{
+  \endquotation
+}
+
+\endinput
