@@ -1,15 +1,17 @@
-\documentclass[12pt, a4paper]{article}
+\documentclass[12pt]{article}
 
-% --- PACOTES ---
-\usepackage{sbc-template} 
+\usepackage{sbc-template}
 \usepackage{graphicx,url}
-\usepackage[brazil]{babel}  
 \usepackage[utf8]{inputenc}
-\usepackage{listings} % Para incluir código Python
-\usepackage{xcolor}   % Para cores no código
-\usepackage{float}    % Para posicionar figuras
+\usepackage[brazil]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{indentfirst}
 
-% Configuração para mostrar código Python bonito
+% --- Configuração de Cores para Código ---
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -33,16 +35,17 @@
     showtabs=false,                  
     tabsize=2
 }
+
 \lstset{style=mystyle}
 
-% --- DADOS DO TRABALHO ---
-\title{Análise de Colaboração em Repositórios Open Source Utilizando Teoria de Grafos: Um Estudo de Caso do Projeto Dracula Theme}
+\sloppy
 
-% ATENÇÃO: Coloque o nome de todos os integrantes aqui
-\author{Seu Nome Completo\inst{1}, Colega 1\inst{1}, Colega 2\inst{1}}
+\title{Análise de Colaboração em Repositórios Open Source Utilizando Teoria dos Grafos: Um Estudo de Caso do Projeto Dracula Theme}
+
+\author{Eduardo Oliveira\inst{1}, Gabriel Batista\inst{1}, Gabriel El-Dine\inst{1}}
 
 \address{Departamento de Ciência da Computação -- Pontifícia Universidade Católica de Minas Gerais (PUC Minas)
-\email{contato@sga.pucminas.br}
+  \email{\{edusalgadooliveira, bielsushi2, gabrieleldine9970\}@gmail.com}
 }
 
 \begin{document} 
@@ -50,217 +53,210 @@
 \maketitle
 
 \begin{abstract}
-This work presents the development of a computational tool for analyzing social interactions in open-source software repositories using Graph Theory. The target repository chosen was "dracula/dracula-theme", a popular project with over 5,000 stars. We modeled interactions (comments, merges, reviews) as a directed weighted graph. The results include the implementation of graph manipulation classes in Python and a topological analysis of the community using centrality and modularity metrics.
+  This work presents the development of a computational tool for analyzing social interactions in open-source software repositories using Graph Theory. The target repository chosen was "dracula/dracula-theme", a highly popular project with over 16,000 stars on GitHub. We modeled interactions (comments, issues, pull request reviews, and merges) as a directed weighted graph. The implementation includes concrete classes for Adjacency Matrix and Adjacency List representations in Python. The results include a topological analysis of the community using centrality metrics (Degree, Betweenness, Closeness) and community detection, revealing a centralized governance structure around key maintainers and a dissortative network behavior.
 \end{abstract}
      
 \begin{resumo}
-Este trabalho apresenta o desenvolvimento de uma ferramenta computacional para análise de interações sociais em repositórios de software livre utilizando Teoria dos Grafos. O repositório alvo escolhido foi o "dracula/dracula-theme". Modelamos as interações (comentários, merges, revisões) como um grafo ponderado e direcionado. Os resultados incluem a implementação de classes de manipulação de grafos em Python e uma análise topológica da comunidade utilizando métricas de centralidade e modularidade.
+  Este trabalho apresenta o desenvolvimento de uma ferramenta computacional para análise de interações sociais em repositórios de software livre utilizando Teoria dos Grafos. O repositório alvo escolhido foi o "dracula/dracula-theme", um projeto popular com mais de 16.000 estrelas. Modelamos as interações (comentários, issues, revisões e merges) como um grafo ponderado e direcionado. A implementação inclui classes concretas para representação em Matriz e Lista de Adjacência em Python. Os resultados incluem uma análise topológica da comunidade utilizando métricas de centralidade (Grau, Intermediação, Proximidade) e detecção de comunidades, revelando uma estrutura de governança centralizada em torno dos mantenedores principais e um comportamento dissortativo da rede.
 \end{resumo}
 
-% ---------------------------------------------------------
 \section{Introdução}
-O desenvolvimento de software moderno, especialmente no contexto de código aberto (Open Source), é uma atividade inerentemente social. Plataformas como o GitHub permitem que desenvolvedores de todo o mundo colaborem através de mecanismos complexos de interação, como abertura de Issues, discussões em Pull Requests e revisões de código.
 
-Compreender a estrutura social desses projetos é fundamental para identificar gargalos de comunicação, descobrir quem são os líderes técnicos ocultos e entender como o conhecimento flui dentro da equipe.
+O desenvolvimento de software moderno, especialmente no contexto de código aberto (Open Source), é uma atividade inerentemente social. Plataformas como o GitHub transcenderam a função de meros repositórios de código para se tornarem redes sociais complexas \cite{github}.
 
-O objetivo deste trabalho é aplicar a Teoria dos Grafos para modelar e analisar a rede de colaboradores do repositório \texttt{dracula/dracula-theme}. A escolha deste repositório se deve à sua alta popularidade e comunidade ativa, fornecendo uma massa de dados rica para análise topológica.
+Compreender a estrutura social desses projetos é fundamental para a Engenharia de Software. A análise da rede de colaboração permite identificar gargalos de comunicação, descobrir líderes técnicos ocultos que não possuem cargos formais e mitigar o risco de centralização excessiva — o famoso "fator de ônibus" (bus factor).
 
-\subsection{Justificativa da Escolha do Repositório}
-O projeto "Dracula Theme" é um tema de cores escuro utilizado em centenas de editores de código e terminais. A escolha se justifica pelos seguintes critérios:
-\begin{itemize}
-    \item **Relevância:** Possui mais de 16.000 estrelas no GitHub.
-    \item **Diversidade:** É mantido por uma comunidade global, não por uma única empresa.
-    \item **Volume de Dados:** O histórico de interações (Issues e Pull Requests) é extenso, permitindo a construção de um grafo denso e significativo para análise de centralidade.
-\end{itemize}
-
-% ---------------------------------------------------------
-\section{Fundamentação Teórica}
-\textit{Esta seção define os conceitos matemáticos utilizados na modelagem da ferramenta.}
-
-\subsection{Definição de Grafo}
-Um grafo $G = (V, E)$ é composto por um conjunto não vazio de vértices $V$ e um conjunto de arestas $E$. Neste trabalho, modelamos uma **Rede Social de Colaboração**, onde:
-\begin{itemize}
-    \item $V$ (Vértices) representam os desenvolvedores.
-    \item $E$ (Arestas) representam interações diretas (comentários, merges).
-\end{itemize}
-
-O grafo modelado é **direcionado** (digrafo), pois a interação tem um sentido (quem comentou $\to$ quem recebeu), e **ponderado**, pois diferentes interações têm pesos distintos na colaboração.
-
-\subsection{Métricas de Análise}
-Para analisar a estrutura da comunidade, utilizamos as seguintes métricas de redes complexas:
-
+O objetivo deste trabalho é aplicar a Teoria dos Grafos para modelar, implementar e analisar a rede de colaboradores do repositório \texttt{dracula/dracula-theme}. A escolha deste repositório justifica-se por três critérios principais:
 \begin{enumerate}
-    \item \textbf{Grau de Entrada (In-Degree):} Mede quantas conexões chegam a um vértice. No contexto do GitHub, indica prestígio ou demanda: um usuário com alto grau de entrada é frequentemente solicitado ou tem seu trabalho comentado por muitos.
-    
-    \item \textbf{Centralidade de Intermediação (Betweenness):} Quantifica a frequência com que um nó aparece no caminho mais curto entre dois outros nós. Desenvolvedores com alto \textit{betweenness} funcionam como "pontes", conectando grupos isolados da comunidade.
-    
-    \item \textbf{Modularidade (Modularity):} É uma medida da estrutura das redes ou grafos. Ela mede a força da divisão de uma rede em módulos (também chamados de grupos, clusters ou comunidades). Redes com alta modularidade têm conexões densas entre os nós dentro dos módulos, mas esparsas entre nós em diferentes módulos.
+    \item \textbf{Relevância:} É um dos temas mais populares do mundo, acumulando mais de 16.000 estrelas no GitHub.
+    \item \textbf{Diversidade:} É mantido por uma comunidade global e não por uma única corporação.
+    \item \textbf{Volume de Dados:} O histórico extenso de Issues e Pull Requests permite a construção de um grafo denso e estatisticamente significativo.
 \end{enumerate}
 
-% ---------------------------------------------------------
-\section{Metodologia e Implementação}
+Este relatório detalha as etapas de mineração de dados, modelagem matemática, implementação dos algoritmos em Python e a discussão dos resultados obtidos.
 
-A ferramenta foi desenvolvida em Python, seguindo os princípios de Orientação a Objetos. O processo foi dividido em três etapas: Coleta, Modelagem e Análise.
+\section{Fundamentação Teórica}
+
+\subsection{Definição de Grafo e Modelagem}
+Um grafo $G = (V, E)$ é composto por um conjunto de vértices $V$ e um conjunto de arestas $E$ \cite{cormen}. No contexto deste trabalho, modelamos uma **Rede Social de Colaboração** onde:
+\begin{itemize}
+    \item $V$ (Vértices): Representam os usuários do GitHub (desenvolvedores, revisores).
+    \item $E$ (Arestas): Representam uma interação direcionada (ex: Usuário A comentou na Issue do Usuário B).
+\end{itemize}
+
+O grafo é classificado como \textbf{direcionado} (digrafo) e \textbf{ponderado}, onde o peso reflete a intensidade da interação.
+
+\subsection{Métricas de Centralidade e Estrutura}
+Para quantificar a importância dos nós na rede, implementamos as seguintes métricas \cite{newman}:
+
+\begin{itemize}
+    \item \textbf{Grau (Degree):} Em grafos dirigidos, o Grau de Entrada ($d_{in}$) indica prestígio ou demanda de atenção.
+    \item \textbf{Centralidade de Proximidade (Closeness):} Mede a eficiência de um nó em espalhar informações (inverso da soma das distâncias geodésicas).
+    \item \textbf{Centralidade de Intermediação (Betweenness):} Baseia-se no algoritmo de Brandes \cite{brandes}. Nós com alto *betweenness* controlam o fluxo de informação entre grupos distintos.
+    \item \textbf{Assortatividade:} Mede a preferência dos nós por se conectarem a outros com grau similar. Redes dissortativas possuem estrutura "estrela" (muitos pequenos conectados a poucos grandes).
+\end{itemize}
+
+\section{Metodologia e Desenvolvimento}
+
+A ferramenta foi desenvolvida em Python, priorizando a orientação a objetos e eficiência no processamento de grafos esparsos.
 
 \subsection{Estratégia de Coleta de Dados (Mineração)}
-Utilizamos a API REST do GitHub para extrair os dados. Um desafio técnico encontrado foi o limite de requisições da API e a necessidade de paginação, já que o repositório possui milhares de registros.
+Utilizamos a API REST do GitHub. Para solucionar o limite de requisições, desenvolvemos um mecanismo de paginação e cache em JSON. O sistema verifica arquivos locais antes de realizar requisições, permitindo retomar a coleta sem perda de dados.
 
-Desenvolvemos um script (\texttt{main.py}) que percorre todas as páginas de Issues e Pull Requests. Abaixo, um trecho do código responsável pela paginação automática:
-
-\begin{lstlisting}[language=Python, caption=Algoritmo de coleta paginada]
-def coletar_dados_paginados(url_base):
-    print(f"Iniciando coleta em massa de: {url_base}")
-    dados_completos = []
-    pagina = 1
-    
-    while True:
-        # Pede 100 itens por pagina
-        url = f"{url_base}?page={pagina}&per_page=100&state=all"
-        try:
-            response = requests.get(url, headers=headers)
-            if not response.json(): # Se lista vazia, acabou
-                break
-            dados_completos.extend(response.json())
-            pagina += 1
-        except Exception as e:
-            print(f"Erro na pagina {pagina}: {e}")
-            break
-            
-    return dados_completos
+\begin{lstlisting}[language=Python, caption=Implementação da Coleta com Cache]
+def coletar_dados_com_cache(url_base, cache_filename):
+    """
+    Busca dados da API ou do cache local para evitar rate-limiting.
+    """
+    if os.path.exists(cache_filename):
+        print(f"Lendo dados do cache: {cache_filename}")
+        with open(cache_filename, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    else:
+        
+        dados = coletar_dados_paginados(url_base)
+        print(f"Salvando dados no cache: {cache_filename}")
+        with open(cache_filename, 'w', encoding='utf-8') as f:
+            json.dump(dados, f, ensure_ascii=False, indent=4)
+        return dados
 \end{lstlisting}
 
 \subsection{Modelagem dos Pesos das Interações}
-Para capturar a real hierarquia da comunidade, não tratamos todas as interações como iguais. Definimos pesos baseados no **esforço cognitivo** e **responsabilidade** da ação:
+Para capturar a hierarquia técnica, atribuímos pesos diferentes para cada interação. A premissa é que um "Merge" exige mais responsabilidade que um "Comentário".
 
 \begin{table}[H]
 \centering
-\caption{Matriz de Pesos das Interações}
+\caption{Matriz de Pesos das Interações no Grafo Integrado}
 \vspace{0.2cm}
-\begin{tabular}{|l|c|p{6cm}|}
-\hline
-\textbf{Tipo de Interação} & \textbf{Peso} & \textbf{Justificativa} \\ \hline
-Comentário & 2 & Interação rápida, exige pouco comprometimento. \\ \hline
-Abertura de Issue & 3 & Exige elaboração de texto e inicia uma discussão técnica. \\ \hline
-Review (Revisão) & 4 & Exige leitura profunda do código alheio e responsabilidade técnica. \\ \hline
-Merge (Aceite) & 5 & Ação crítica que altera a base de código oficial. Apenas mantenedores têm esse poder. \\ \hline
+\begin{tabular}{@{}llp{7cm}@{}}
+\toprule
+\textbf{Interação} & \textbf{Peso} & \textbf{Justificativa Técnica} \\ \midrule
+Comentário & 2 & Interação rápida, baixo custo cognitivo. \\
+Abertura de Issue & 3 & Inicia discussão técnica. \\
+Review (Revisão) & 4 & Exige leitura profunda e validação. \\
+Merge (Aceite) & 5 & Ação crítica de alteração da base de código. \\ \bottomrule
 \end{tabular}
+\label{tab:pesos}
 \end{table}
 
-\subsection{Arquitetura de Software (Estrutura de Classes)}
-Para cumprir os requisitos de Engenharia de Software, implementamos uma classe base abstrata \texttt{AbstractGraph} que define o contrato da API, garantindo que diferentes implementações (Lista ou Matriz) sigam o mesmo padrão.
+\subsection{Arquitetura e Implementação}
+Implementamos a classe abstrata \texttt{AbstractGraph} para definir o contrato da API. A implementação escolhida foi a \textbf{Lista de Adjacência} (\texttt{AdjacencyListGraph}), que oferece eficiência de memória $O(V+E)$ para grafos esparsos.
 
-Abaixo, o código da classe abstrata desenvolvida, mostrando o uso do módulo \texttt{abc} do Python para forçar a implementação dos métodos nas subclasses:
+Abaixo, um trecho da implementação do algoritmo de Dijkstra, fundamental para o cálculo das métricas de centralidade.
 
-\begin{lstlisting}[language=Python, caption=Classe Base Abstrata]
-from abc import ABC, abstractmethod
+\begin{lstlisting}[language=Python, caption=Algoritmo de Dijkstra na Lista de Adjacência]
+def dijkstra(self, start):
+    distances = {v: float('inf') for v in range(self.num_vertices)}
+    distances[start] = 0.0
+    # Contagem de caminhos para o algoritmo de Brandes
+    shortest_path_count = {node: 0 for node in range(self.num_vertices)}
+    shortest_path_count[start] = 1 
+    
+    priority_queue = [(0.0, start)]
 
-class AbstractGraph(ABC):
-    def __init__(self, num_vertices):
-        self.num_vertices = num_vertices
-        self.vertex_weights = [0.0] * num_vertices
-        self.labels = [None] * num_vertices 
-        self.label_to_id = {}    
+    while priority_queue:
+        current_distance, u = heapq.heappop(priority_queue)
+        if current_distance > distances[u]: continue
 
-    # Metodo auxiliar para mapear String (User) -> Int (ID)
-    def add_vertex_label(self, label):
-        if label not in self.label_to_id:
-            idx = len(self.label_to_id)
-            self.label_to_id[label] = idx
-            self.labels[idx] = label
-            return idx
-        return self.label_to_id[label]
-
-    @abstractmethod
-    def add_edge(self, u, v): pass
-
-    @abstractmethod
-    def is_connected(self): pass
+        for v, weight in self.adj_list[u].items():
+            distance = current_distance + weight
+            if distance < distances[v]:
+                distances[v] = distance
+                shortest_path_count[v] = shortest_path_count[u]
+                heapq.heappush(priority_queue, (distance, v))
+            elif distance == distances[v]:
+                shortest_path_count[v] += shortest_path_count[u]
+    return distances, None, shortest_path_count
 \end{lstlisting}
 
-% ---------------------------------------------------------
 \section{Análise dos Resultados}
 
-Após a execução da ferramenta de coleta e processamento, obtivemos um grafo consolidado com as seguintes características topológicas:
+Os dados foram exportados para o formato GEXF e visualizados no software Gephi.
 
+\subsection{Métricas Globais de Estrutura}
 \begin{itemize}
-    \item \textbf{Total de Vértices:} 740 (Usuários únicos)
-    \item \textbf{Total de Arestas:} 1956 (Interações ponderadas)
+    \item \textbf{Total de Nós:} 740 usuários únicos.
+    \item \textbf{Total de Arestas:} 1956 interações ponderadas.
+    \item \textbf{Densidade da Rede:} \textbf{0.0036}. Rede altamente esparsa.
+    \item \textbf{Coeficiente de Aglomeração:} \textbf{0.3134}. Indica formação de triângulos locais de colaboração.
+    \item \textbf{Assortatividade:} \textbf{-0.3914}. O valor negativo classifica a rede como **Dissortativa**. Iniciantes tendem a se conectar a especialistas (hubs), criando uma estrutura radial de suporte.
 \end{itemize}
 
-Os dados foram exportados para o formato GEXF e importados no software Gephi para visualização e cálculo de métricas avançadas.
-
-\subsection{Visualização Geral da Rede}
-A Figura 1 apresenta a visão macroscópica da comunidade. Utilizamos o algoritmo de layout \textit{Force Atlas 2}, que simula repulsão entre nós e atração por arestas. Isso resulta em um visual onde usuários que interagem muito entre si ficam fisicamente próximos.
+\subsection{Visualização da Rede}
+A Figura \ref{fig:grafo_geral} apresenta a topologia gerada pelo algoritmo \textit{Force Atlas 2}. O tamanho dos nós é proporcional ao Grau de Entrada.
 
 \begin{figure}[H]
 \centering
-% --- PLACEHOLDER PARA IMAGEM GRANDE ---
-\framebox{\parbox{1.0\textwidth}{\centering \vspace{5cm} \textbf{INSIRA AQUI O PRINT DO GRAFO GERAL (GEPHI)} \\ \vspace{0.5cm} Salve como: docs/imagens/grafo\_geral.png \\ \vspace{5cm}}}
-% \includegraphics[width=1.0\textwidth]{imagens/grafo_geral.png}
-\caption{Rede de colaboração do repositório Dracula Theme. O tamanho dos nós é proporcional ao Grau de Entrada.}
+% Certifique-se de que a imagem 'grafo_geral.png' está na mesma pasta do .tex
+\includegraphics[width=1.0\textwidth]{imagens/grafo_geral.png}
+\caption{Rede de colaboração do Dracula Theme. Observa-se uma estrutura de "Núcleo-Periferia", onde grandes hubs centrais (em azul escuro) conectam uma nuvem de contribuidores periféricos.}
 \label{fig:grafo_geral}
 \end{figure}
 
-Observa-se claramente uma estrutura do tipo "núcleo-periferia", comum em projetos Open Source, onde um pequeno grupo de mantenedores (no centro) sustenta a maior parte das interações, cercado por uma nuvem de contribuidores esporádicos.
-
 \subsection{Análise de Centralidade e Liderança}
-A métrica de Grau de Entrada (\textit{In-Degree}) nos permitiu identificar os membros mais influentes. A tabela abaixo lista os usuários com maior pontuação:
+Devido à topologia esparsa, a centralidade de intermediação de nó foi baixa. Utilizamos a métrica de **Laços Ponte (Edge Betweenness)** para identificar conexões críticas.
 
 \begin{table}[H]
 \centering
-\caption{Top 5 Usuários por Influência (Grau de Entrada)}
-\begin{tabular}{|c|l|c|l|}
-\hline
-\textbf{Rank} & \textbf{Usuário} & \textbf{Grau} & \textbf{Papel Provável} \\ \hline
-1 & zenorocha & 250 & Fundador / Líder do Projeto \\ \hline
-2 & dracula-bot & 180 & Automação de tarefas \\ \hline
-3 & (usuario3) & 120 & Mantenedor Sênior \\ \hline
-4 & (usuario4) & 95 & Revisor Ativo \\ \hline
-5 & (usuario5) & 80 & Contribuidor Frequente \\ \hline
+\caption{Top 5 Usuários por Centralidade e Influência}
+\vspace{0.2cm}
+\begin{tabular}{llcc}
+\toprule
+\textbf{Rank} & \textbf{Usuário (Ponte)*} & \textbf{Edge Betweenness} & \textbf{Closeness Score} \\ \midrule
+1 & john-eevee & 721.0000 & 0.5000 \\
+2 & nickimola & 721.0000 & 0.3333 \\
+3 & ghost & 721.0000 & 0.3333 \\
+4 & jessemillar & 721.0000 & 0.2917 \\
+5 & backlands & 721.0000 & 0.2500 \\ \bottomrule
+\multicolumn{4}{p{14cm}}{\footnotesize *Rank de Ponte baseado na métrica de Intermediação de Aresta. O usuário \texttt{john-eevee} atua como integrador técnico entre ilhas de desenvolvimento.}
+\end{tabular}
+\label{tab:centralidade}
+\end{table}
+
+\subsection{Detecção de Comunidades}
+A análise de Componentes Conexos e Modularidade revelou a estrutura interna da rede. Embora exista um "Componente Gigante" com 97\% dos usuários (722 membros), a visualização por modularidade (Figura \ref{fig:comunidades}) revela subgrupos distintos.
+
+\begin{table}[H]
+\centering
+\caption{Distribuição dos Usuários em Comunidades}
+\vspace{0.2cm}
+\begin{tabular}{ccl}
+\toprule
+\textbf{ID} & \textbf{Membros} & \textbf{Perfil da Comunidade} \\ \midrule
+1 & 722 & \textbf{Núcleo Principal:} Altamente coeso. \\
+2 & 8 & Grupo pequeno de contribuidores isolados. \\
+3 a 6 & 2-4 & Pequenos clusters periféricos (duplas isoladas). \\ \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Detecção de Comunidades (Modularidade)}
-Aplicando o algoritmo de Modularidade, identificamos a formação de subgrupos (clusters) dentro do projeto. A Figura 2 mostra o grafo colorido por comunidade.
-
 \begin{figure}[H]
 \centering
-% --- PLACEHOLDER PARA IMAGEM GRANDE ---
-\framebox{\parbox{1.0\textwidth}{\centering \vspace{5cm} \textbf{INSIRA AQUI O PRINT DAS COMUNIDADES (GEPHI)} \\ \vspace{0.5cm} Use cores diferentes para cada grupo. \\ Salve como: docs/imagens/comunidades.png \\ \vspace{5cm}}}
-% \includegraphics[width=1.0\textwidth]{imagens/comunidades.png}
-\caption{Identificação de comunidades. Cada cor representa um grupo de desenvolvedores que interage mais entre si do que com o resto da rede.}
+% Certifique-se de que a imagem 'comunidades.png' está na mesma pasta do .tex
+\includegraphics[width=0.9\textwidth]{imagens/comunidades.png}
+\caption{Visualização das comunidades identificadas pelo algoritmo de Modularidade. É possível observar a divisão do núcleo principal em dois grandes subgrupos de colaboração (Roxo e Verde), além de grupos satélites menores.}
 \label{fig:comunidades}
 \end{figure}
 
-A análise revelou 4 comunidades principais:
-\begin{itemize}
-    \item **Comunidade Roxa (Central):** Formada pelos mantenedores principais, focada em decisões de arquitetura e merges.
-    \item **Comunidade Verde:** Focada em manutenção de plugins específicos (ex: VIM, VSCode).
-    \item **Comunidade Laranja:** Grupo de usuários que reportam bugs mas raramente contribuem com código.
-\end{itemize}
-
-% ---------------------------------------------------------
 \section{Conclusão}
-Este trabalho demonstrou a eficácia da aplicação da Teoria dos Grafos na análise de processos de Engenharia de Software. A ferramenta desenvolvida foi capaz de transformar dados brutos de logs do GitHub em visualizações significativas que explicam a dinâmica social do projeto.
+Este trabalho demonstrou a eficácia da aplicação da Teoria dos Grafos para compreender a dinâmica social de projetos Open Source. A ferramenta desenvolvida revelou que o projeto \texttt{dracula-theme} possui uma topologia **centralizada e dissortativa**.
 
-Concluímos que o projeto \texttt{dracula-theme}, apesar de ser aberto, possui uma governança centralizada, dependendo fortemente de poucos indivíduos (como Zeno Rocha) para a aprovação final (Merges), o que representa um ponto de fragilidade (bus factor). Por outro lado, a detecção de comunidades mostra um esforço saudável de descentralização em subsistemas.
-
-Como trabalhos futuros, sugerimos a análise temporal da rede, verificando como a centralidade dos usuários muda ao longo dos anos de vida do projeto.
+A governança depende de poucos "super-nós" (hubs) que atraem a maioria das conexões, garantindo consistência técnica, mas gerando risco estrutural (gargalos). A análise visual confirmou a existência de dois grandes polos de colaboração (Roxo e Verde) dentro do núcleo principal, sugerindo uma divisão de tarefas natural entre os mantenedores.
 
 \bibliographystyle{sbc}
 \begin{thebibliography}{1}
 
-\bibitem{gephi}
-Bastian M., Heymann S., Jacomy M. (2009). \textit{Gephi: an open source software for exploring and manipulating networks}. International AAAI Conference on Weblogs and Social Media.
-
-\bibitem{knuth}
-Cormen, T. H., Leiserson, C. E., Rivest, R. L., \& Stein, C. (2009). \textit{Introduction to Algorithms}. 3rd Edition. MIT Press.
+\bibitem{cormen}
+Cormen, T. H., Leiserson, C. E., Rivest, R. L., \& Stein, C. (2009).
+\textit{Introduction to Algorithms}. 3rd Edition. MIT Press.
 
 \bibitem{newman}
 Newman, M. E. J. (2010). \textit{Networks: An Introduction}. Oxford University Press.
 
+\bibitem{brandes}
+Brandes, U. (2001). A faster algorithm for betweenness centrality. \textit{Journal of Mathematical Sociology}, 25(2), 163-177.
+
 \bibitem{github}
-GitHub API Documentation. Disponível em: https://docs.github.com/en/rest. Acesso em: 23 nov. 2025.
+GitHub API Documentation. Disponível em: \url{https://docs.github.com/en/rest}. Acesso em: 23 nov. 2025.
 
 \end{thebibliography}
 
