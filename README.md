@@ -102,10 +102,10 @@ git clone [https://github.com/Eduardo-asl-Oliveira/Trabalho-de-Grafos.git]
 
 👥 Autores
 
-[Eduardo Alves Salgado Lisboa Oliveira]
+[Eduardo Alves Salgado Lisboa Oliveira] = (documentação)
 
-[Gabriel Batista de Almeida]
+[Gabriel Batista de Almeida] - (codigo)
 
-[Gabriel El-dine Breguez da Cunha]
+[Gabriel El-dine Breguez da Cunha] - (readme)
 
 Projeto desenvolvido para a disciplina de Teoria de Grafos e Computabilidade - PUC Minas.
